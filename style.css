@@ -23,7 +23,7 @@ body{
 }
 .heading-content{
     position: absolute;
-    top: 250px;
+    top: 50%;
     width: 100%;
     max-width: 100%;
 }
