@@ -15,15 +15,18 @@
 }
 .navbar-dark.navbar-nav.nav-link{
     color: white;
-    padding-left: 20px;
+    padding-left: 50px;
 }
 .navbar-dark.navbar-nav.nav-link.active,
 .navbar-dark.navbar-nav.nav-link:hover{
     color: cadetblue;
 }
+.welcome{
+    position: relative;
+}
 .heading-content{
     position: absolute;
-    top: 30vw;
+    top: 40%;
     width: 100%;
     max-width: 100%;
 }
@@ -73,8 +76,6 @@
     padding: 1rem;
     max-width: 15rem;
     margin-left: 1rem;
-    border: 2px solid #f5ba09;
-    border-radius: 0.5rem;
   }
   .media_link.btn{
       width: fit-content;
