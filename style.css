@@ -23,24 +23,24 @@
 }
 .heading-content{
     position: absolute;
-    top: 50%;
+    top: 40vw;
     width: 100%;
     max-width: 100%;
 }
 .heading-content h6{
-    font-size: 20px;
+    font-size: 2vw;
     font-weight: 200;
     color: white;
     font-family: monospace;
 }
 .heading-content h1{
-    font-size: 3em;
+    font-size: 5vw;
     font-weight: 300r;
     color: white;
     font-family: monospace;
 }
 .heading-content p{
-    font-size: 1em;
+    font-size: 1vw;
     font-weight:lighter;
     text-transform: uppercase;
     color: rgb(160, 151, 151);
