@@ -23,7 +23,7 @@
 }
 .heading-content{
     position: absolute;
-    top: 40vw;
+    top: 30vw;
     width: 100%;
     max-width: 100%;
 }
@@ -40,7 +40,7 @@
     font-family: monospace;
 }
 .heading-content p{
-    font-size: 1vw;
+    font-size: 1.5vw;
     font-weight:lighter;
     text-transform: uppercase;
     color: rgb(160, 151, 151);
