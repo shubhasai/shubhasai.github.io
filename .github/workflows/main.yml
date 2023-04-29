@@ -15,19 +15,19 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: 11
-      - name: "Cache SSG HTTP caches"
-        id: 'cache-http'
-        uses: 'actions/cache@v3'
-        with:
-          path: 'build/cache'
-          key: '${{ runner.os }}-primes'
+#       - name: "Cache SSG HTTP caches"
+#         id: 'cache-http'
+#         uses: 'actions/cache@v3'
+#         with:
+#           path: 'build/cache'
+#           key: '${{ runner.os }}-primes'
       - name: 'Build Kotlin Compose/Web SPA'
-        run: './gradlew :site:spa:build -Prelease'
+        run: './gradlew build'
       - name: 'Build the rest of the static site'
         run: './gradlew :site:ssg:run -Prelease'
       - name: 'Deploy to GitHub Pages'
         uses: 'JamesIves/github-pages-deploy-action@v4.4.0'
         with:
-          folder: 'build/distributions'
+          folder: 'build/distributions/'
           single-commit: true
           force: true
