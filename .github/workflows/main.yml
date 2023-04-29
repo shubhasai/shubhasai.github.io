@@ -26,7 +26,7 @@ jobs:
       - name: 'Build Kotlin Compose/Web SPA'
         run: './gradlew build'
       - name: 'Build the rest of the static site'
-        run: './gradlew :site:ssg:run -Prelease'
+        run: './gradlew run'
       - name: 'Deploy to GitHub Pages'
         uses: 'JamesIves/github-pages-deploy-action@v4.4.0'
         with:
