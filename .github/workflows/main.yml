@@ -26,7 +26,7 @@ jobs:
       - name: 'Make gradle accessible to user'
         run: 'chmod +x ./gradlew'
       - name: 'Build Kotlin Compose/Web SPA'
-        run: './gradlew build'
+        run: './gradlew jsBrowserDistribution'
       - name: 'Deploy to GitHub Pages'
         uses: 'JamesIves/github-pages-deploy-action@v4.4.0'
         with:
