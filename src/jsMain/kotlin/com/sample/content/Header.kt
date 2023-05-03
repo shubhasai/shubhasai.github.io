@@ -13,9 +13,15 @@ fun Header() {
     Section(attrs = {
         classes(WtSections.wtSectionBgGrayDark)
     }) {
-        Div({ classes(WtContainer.wtContainer) }) {
+        Div({ classes(WtContainer.wtContainer)
+        style {
+            display(DisplayStyle.Flex)
+        }}) {
             Div({
                 classes(WtRows.wtRow, WtRows.wtRowSizeM)
+                style {
+                    alignSelf(AlignSelf.Center)
+                }
             }) {
                 Logo()
                 // TODO: support i18n
@@ -29,10 +35,13 @@ fun Header() {
 private fun Logo() {
     Div(attrs = {
         classes(WtCols.wtColInline)
+        style {
+            alignSelf(AlignSelf.Center)
+        }
     }) {
         A(attrs = {
             target(ATarget.Blank)
-        }, href = "https://shubhasai.github.io/") {
+        }, href = "https://shubhasaimohapatra.in") {
             Div(attrs = {
                 classes("jetbrains-logo", "_logo-jetbrains-square", "_size-5")
             }) {}

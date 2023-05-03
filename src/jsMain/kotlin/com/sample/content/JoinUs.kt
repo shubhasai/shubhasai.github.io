@@ -33,7 +33,7 @@ fun JoinUs() {
                         }
                         Text("\nFeel free to contact me ")
                         LinkToSlack(
-                            url = "mailto:email@example.com",
+                            url = "mailto:mshubhasai2002@gmail.com",
                             text = "Here"
                         )
                     }
