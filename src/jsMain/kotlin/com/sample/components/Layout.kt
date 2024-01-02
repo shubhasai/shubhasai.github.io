@@ -30,6 +30,12 @@ fun MainContentLayout(content: @Composable () -> Unit) {
         style {
             flex("1 0 auto")
             boxSizing("border-box")
+            paddingTop(80.px)
+            position(Position.Relative)
+            property("zIndex","1")
+            width(100.vw)
+            minHeight(100.vh)  // At least as tall as the viewport
+            overflowY("auto")  // Make it scrollable
         }
     }) {
         content()
@@ -53,6 +59,33 @@ fun ContainerInSection(sectionThemeStyleClass: String? = null, content: @Composa
     }) {
         Div({
             classes(WtContainer.wtContainer, WtOffsets.wtTopOffset96)
+            style {
+                width(100.percent)  // Ensure this div takes the full width
+            }
+        }) {
+            content()
+        }
+    }
+}
+
+@Composable
+fun ContainerInSectionFill(sectionThemeStyleClass: String? = null, content: @Composable () -> Unit) {
+    Section({
+        if (sectionThemeStyleClass != null) {
+            classes(WtSections.wtSection, sectionThemeStyleClass)
+            style {
+                display(DisplayStyle.Flex)
+                width(100.percent)
+            }
+        } else {
+            classes(WtSections.wtSection)
+            style {
+                display(DisplayStyle.Flex)
+            }
+        }
+    }) {
+        Div({
+            classes(WtSections.wtSection, WtOffsets.wtTopOffset96)
         }) {
             content()
         }

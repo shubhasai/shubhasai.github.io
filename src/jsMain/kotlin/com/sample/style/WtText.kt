@@ -25,6 +25,48 @@ object WtTexts : StyleSheet(AppStylesheet) {
             "Gotham SSm A,Gotham SSm B,system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Droid Sans,Helvetica Neue,Arial,sans-serif"
         )
     }
+    val wtHero2 by style {
+        color(Color("#fff"))
+        fontSize(40.px)
+        fontSize(AppCSSVariables.wtHeroFontSize.value(40.px))
+        letterSpacing(-1.5.px)
+        fontWeight(900)
+        lineHeight(40.px)
+        lineHeight(AppCSSVariables.wtHeroLineHeight.value(40.px))
+
+        media(mediaMaxWidth(640.px)) {
+            self style {
+                AppCSSVariables.wtHeroFontSize(22.px)
+                AppCSSVariables.wtHeroLineHeight(24.px)
+            }
+        }
+
+        property(
+            "font-family",
+            "Gotham SSm A,Gotham SSm B,system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Droid Sans,Helvetica Neue,Arial,sans-serif"
+        )
+    }
+    val wtHero5 by style {
+        color(Color("#fff"))
+        fontSize(20.px)
+        fontSize(AppCSSVariables.wtHeroFontSize.value(20.px))
+        letterSpacing(-1.5.px)
+        fontWeight(900)
+        lineHeight(20.px)
+        lineHeight(AppCSSVariables.wtHeroLineHeight.value(20.px))
+
+        media(mediaMaxWidth(640.px)) {
+            self style {
+                AppCSSVariables.wtHeroFontSize(15.px)
+                AppCSSVariables.wtHeroLineHeight(15.px)
+            }
+        }
+
+        property(
+            "font-family",
+            "Gotham SSm A,Gotham SSm B,system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Droid Sans,Helvetica Neue,Arial,sans-serif"
+        )
+    }
 
     val wtSubtitle2 by style {
         color(Color("#27282c"))

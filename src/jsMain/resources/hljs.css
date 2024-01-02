@@ -56,3 +56,11 @@
 .hljs-strong {
     font-weight: 700
 }
+.fixed-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 100; /* Adjust as needed to ensure the header is above other content */
+    /* Add other styling as needed (background, padding, etc.) */
+}

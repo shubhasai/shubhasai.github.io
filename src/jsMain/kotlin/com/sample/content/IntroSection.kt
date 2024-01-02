@@ -1,83 +1,104 @@
 package com.portfolio.content
 
 import androidx.compose.runtime.*
-import org.jetbrains.compose.web.attributes.ATarget
-import org.jetbrains.compose.web.attributes.target
 import org.jetbrains.compose.web.css.*
 import org.jetbrains.compose.web.dom.*
 import com.portfolio.components.ContainerInSection
 import com.portfolio.style.*
+import org.jetbrains.compose.web.attributes.*
+import org.w3c.dom.HTMLElement
 
 @Composable
 fun Intro() {
     ContainerInSection(WtSections.wtSectionBgGrayDark) {
         Div({
+            id("home_section")
             classes(WtRows.wtRow, WtRows.wtRowSizeM, WtRows.wtRowSmAlignItemsCenter)
+            style {
+                display(DisplayStyle.Flex)
+                alignItems(AlignItems.Center)
+                justifyContent(JustifyContent.SpaceBetween)
+            }
         }) {
 
+            // First Div for Lottie animation (40% width)
             Div({
-                classes(WtCols.wtCol2, WtCols.wtColMd3)
+                classes(WtCols.wtCol3, WtCols.wtColMd3)
                 style {
-                    alignSelf(AlignSelf.Start)
+                    alignSelf(AlignSelf.Center)
                 }
             }) {
-                Img(src = "i1.svg", attrs = { classes(AppStylesheet.composeLogo) })
+                // Embed Lottie animation
+                DotLottiePlayer()
             }
 
+            // Second Div for text content (60% width)
             Div({
-                classes(
-                    WtCols.wtCol10,
-                    WtCols.wtColMd8,
-                    WtCols.wtColSm12,
-                    WtOffsets.wtTopOffsetSm12
-                )
+                classes(WtCols.wtCol9, WtCols.wtColMd9, WtCols.wtColSm12, WtOffsets.wtTopOffsetSm12)
+                style {
+                    width(60.percent)
+                }
             }) {
-                H1(attrs = { classes(WtTexts.wtHero) }) {
-                    Text("A passionate ")
-                    Span({
-                        classes(WtTexts.wtHero)
-                        style {
-                            display(DisplayStyle.InlineBlock)
-                            whiteSpace("nowrap")
-                        }
-                    }) {
-                        Text("Android Developer")
+                Div({
+                }) {
+                    H1(attrs = { classes(WtTexts.wtHero) }) {
+                        Text("A passionate ")
+                        Span({
+                            classes(WtTexts.wtHero)
+                            style {
+                                display(DisplayStyle.InlineBlock)
+                                whiteSpace("nowrap")
+                            }
+                        }) {
+                            Text("Android Developer")
 
 //                        Span(attrs = { classes(AppStylesheet.composeTitleTag) }) {
 //                            Text("Technology preview")
 //                        }
+                        }
+                    }
+                    Div({
+                        classes(WtDisplay.wtDisplayMdNone)
+                    }) {
+                        IntroAboutComposeWeb()
                     }
                 }
-                Div({
-                    classes(WtDisplay.wtDisplayMdNone)
-                }) {
-                    IntroAboutComposeWeb()
-                }
             }
-        }
-
-
-        Div(attrs = {
-            classes(WtDisplay.wtDisplayNone, WtDisplay.wtDisplayMdBlock)
-        }) {
-            IntroAboutComposeWeb()
         }
     }
 }
 
 @Composable
-private fun IntroAboutComposeWeb() {
+private fun DotLottiePlayer() {
+    TagElement<HTMLElement>("dotlottie-player", {
+        attr("src", "https://lottie.host/4290260e-55bb-41d2-b5fc-4216a01d80bc/Wvnvy42qGy.json")
+        attr("background", "transparent")
+        attr("speed", "1")
+        style {
+            property("width", "100.percent")
+            property("height", "100.percent")
+        }
+        attr("loop", "")
+        attr("autoplay", "")
+    }, content = null)
+}
+
+
+
+@Composable
+fun IntroAboutComposeWeb() {
     Div({
         classes(WtRows.wtRow, WtRows.wtRowSizeM)
     }) {
-
         Div({
             classes(WtCols.wtCol9, WtCols.wtColMd9, WtCols.wtColSm12)
         }) {
-            P({ classes(WtTexts.wtSubtitle2, WtOffsets.wtTopOffset24)
-                style  {
+            P({
+                classes(WtTexts.wtSubtitle2, WtOffsets.wtTopOffset24)
+                style {
                     color(Color("#fff"))
-                }}) {
+                }
+            }) {
                 Text("Currently working with Android, Kotlin, Compose Multiplatform, KMM. Experienced with Google's ")
 
                 A(href = "https://developer.android.com/jetpack/compose", attrs = {
@@ -87,18 +108,16 @@ private fun IntroAboutComposeWeb() {
                     Text("modern libraries")
                 }
 
-                Text(" and technologies for Android")
-            }
+                Text(" and technologies for Android  ")
+                Span(attrs = {
+                    classes(WtTexts.wtText1, WtOffsets.wtTopOffset24)
+                    style {
+                        color(Color.beige)
+                        //property("cursor", "pointer")
+                        property("text-decoration", "underline")
+                    }
+                })
 
-            P({
-                classes(WtTexts.wtText1, WtOffsets.wtTopOffset24)
-                style  {
-                    color(Color("#fff"))
-                }
-            }) {
-            Text(
-                "Hey there, I'm Shubhasai Mohapatra, a third-year student of Electronics and Telecommunication Engineering at IIIT Bhubaneswar. I'm a computer nerd and love to code in C, C++, Python, and Kotlin. My goal is to create practical solutions that make life easier for people. I'm a huge fan of Android development and can't wait to see where my passion for coding takes me."
-            )
         }
 
             //ComposeWebStatusMessage()

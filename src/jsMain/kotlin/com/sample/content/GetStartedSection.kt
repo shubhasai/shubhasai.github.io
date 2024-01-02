@@ -1,12 +1,21 @@
 package com.portfolio.content
 
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import org.jetbrains.compose.web.css.*
 import org.jetbrains.compose.web.dom.*
 import com.portfolio.components.CardDark
 import com.portfolio.components.ContainerInSection
 import com.portfolio.components.LinkOnCard
 import com.portfolio.style.*
+import io.ktor.client.*
+import io.ktor.client.call.*
+import io.ktor.client.engine.js.*
+import io.ktor.client.plugins.contentnegotiation.*
+import io.ktor.client.request.*
+import io.ktor.client.statement.*
+import io.ktor.serialization.kotlinx.json.*
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.json.Json
 
 private data class GetStartedCardPresentation(
     val title: String,
@@ -52,46 +61,6 @@ private fun getCards(): List<GetStartedCardPresentation> {
         )
     )
 }
-private fun getexpCards(): List<GetStartedCardPresentation> {
-    return listOf(
-        GetStartedCardPresentation(
-            title = "Interview Duniya (June 2022 - Dec 2022)",
-            content = "App Developer Intern. Wireframe the App and Designed the UI of the App’.\n" +
-                    "Integrated Authentication Using Firebase Auth for Email and Google.\n" +
-                    "Sign In.  For Database used ROOM DB and Firebase Realtime Database and Firestore with MVVM Architecture.\n" +
-                    "Integrated 3rd Party APIs using Retrofit and Google Speech to Text API for Voice recognition.",
-            links = listOf(
-                LinkOnCard(
-                    linkText = "Interview Duniya",
-                    linkUrl = "https://www.linkedin.com/company/interviewduniya/"
-                )
-            ),
-            tags = "Services, Broadcast Receivers, Intents, Locations (GPS Module), Custom App Widgets, OkHTTP, Google Map API"
-        ),
-        GetStartedCardPresentation(
-            title = "Google Developer Student Club (Aug 2022 - Apr 2023)",
-            content = "Volunteering in Android App Dev in Google Developer Student Club IIIT Bhubaneswar. As an App Dev Lead and Android Facilitator organized Google Developers Backed Composed Camp on Our Campus. Took various sessions on Jetpack Compose and Libraries during this Camp.\n",
-            links = listOf(
-                LinkOnCard(
-                    linkText = "GDSC IIIT Bh",
-                    linkUrl = "https://www.linkedin.com/company/gdsciiitbh"
-                )
-            ),
-            tags = "Jetpack Navigation, Better UI designing, Firebase Integration, Room Database, Uses of Coroutine, Firebase Storage"
-        ),
-        GetStartedCardPresentation(
-            title = "Tech Society IIIT BH Secretary",
-            content = "As a Tech Society secretary organized a Techno-Management fest in IIIT For the First Time\n",
-            links = listOf(
-                LinkOnCard(
-                    linkText = "Tech Society IIIT Bh",
-                    linkUrl = "https://www.linkedin.com/company/tech-society-iiitbh"
-                )
-            ),
-            tags = "Fragments, WebView Implementation, Layout Designing"
-        )
-    )
-}
 @Composable
 private fun CardContent(text: String,tags:String) {
     P(attrs = {
@@ -115,6 +84,132 @@ private fun ExpCardContent(text: String,tags:String) {
     }
 
 }
+@Composable
+private fun WorkExpCardContent(
+    job:Job
+) {
+    Div(attrs = {
+        style {
+            marginBottom(20.px)
+        }
+    }) {
+        // Company Name
+        P(attrs = { classes(WtTexts.wtText1, WtTexts.wtText1)
+        style {
+            color(Color.beige)
+        }
+        }) {
+            Text(job.companyName)
+        }
+        P(attrs = { classes(WtTexts.wtText2, WtTexts.wtText2ThemeDark) }) {
+            Text("${job.startDate} - ${job.endDate}")
+        }
+
+        // Job Description
+        P(attrs = { classes(WtTexts.wtText2, WtTexts.wtText2ThemeDark, WtOffsets.wtTopOffset24) }) {
+            Text(job.jobDescription)
+        }
+
+        // Dates
+
+        // Skills as Chips
+        Div(attrs = {
+            classes(WtContainer.wtContainer)
+            style {
+                marginTop(10.px)
+                display(DisplayStyle.Flex)
+                flexDirection(FlexDirection.Row)
+                flexWrap(FlexWrap.Wrap)
+            }
+        }) {
+            job.skills.forEach { skill ->
+                Chip(skill = skill)
+            }
+        }
+    }
+}
+@Composable
+private fun ProjectExpCardContent(
+    job:Project
+) {
+    Div(attrs = {
+        style {
+            marginBottom(20.px)
+        }
+    }) {
+        // Company Name
+        P(attrs = { classes(WtTexts.wtText2, WtTexts.wtText2)
+            style {
+                color(Color.beige)
+            }
+        }) {
+            Div(attrs = {
+                // Add your styling for the chips here
+                style {
+                    padding(4.px)
+                    margin(4.px)
+                    display(DisplayStyle.Flex)
+                    flexWrap(FlexWrap.Wrap)
+                    backgroundColor(Color.beige)
+                    borderRadius(8.px)
+                }
+            }) {
+                P(attrs = {
+                    // Add your styling for the chips here
+                    style {
+                        color(Color.black)
+                        padding(5.px)
+                        fontSize(15.px)
+                    }
+                }){
+                    Text(job.projectTag)
+                }
+            }
+        }
+
+        // Job Description
+        P(attrs = { classes(WtTexts.wtText2, WtTexts.wtText2ThemeDark, WtOffsets.wtTopOffset24) }) {
+            Text(job.projectDescription)
+        }
+        Div(attrs = {
+            classes(WtContainer.wtContainer)
+            style {
+                marginTop(10.px)
+                display(DisplayStyle.Flex)
+                flexDirection(FlexDirection.Row)
+                flexWrap(FlexWrap.Wrap)
+            }
+        }) {
+            job.skills.forEach { skill ->
+                Chip(skill = skill)
+            }
+        }
+    }
+}
+
+@Composable
+private fun Chip(skill: String) {
+    Div(attrs = {
+        // Add your styling for the chips here
+        style {
+            padding(4.px)
+            margin(4.px)
+            backgroundColor(Color.beige)
+            borderRadius(8.px)
+        }
+    }) {
+        H5(attrs = {
+            // Add your styling for the chips here
+            style {
+                color(Color.black)
+                padding(5.px)
+            }
+        }){
+            Text(skill)
+        }
+    }
+}
+
 @Composable
 fun GetStarted() {
     ContainerInSection(WtSections.wtSectionBgGrayDark) {
@@ -141,21 +236,7 @@ fun GetStarted() {
             }
         }
 
-        Div(
-            attrs = {
-                classes(WtRows.wtRow, WtRows.wtRowSizeM, WtOffsets.wtTopOffset24)
-            }
-        ) {
-            getCards().forEach {
-                CardDark(
-                    title = it.title,
-                    links = it.links,
-                    wtExtraStyleClasses = listOf(WtCols.wtCol4, WtCols.wtColMd6, WtCols.wtColSm12)
-                ) {
-                    CardContent(it.content,it.tags)
-                }
-            }
-        }
+
         Div(attrs = {
             classes(WtRows.wtRowSizeM, WtRows.wtRow, WtOffsets.wtTopOffset24)
         }) {
@@ -172,21 +253,166 @@ fun GetStarted() {
                 }
             }
         }
-
-        Div(
-            attrs = {
-                classes(WtRows.wtRow, WtRows.wtRowSizeM, WtOffsets.wtTopOffset24)
+    }
+}
+@Serializable
+data class Job(
+    val _id: String,
+    val jobTitle: String,
+    val companyName: String,
+    val jobDescription: String,
+    val startDate: String, // Consider using a more appropriate type for dates
+    val endDate: String,   // such as java.time.LocalDate in a non-serializable context
+    val skills: List<String>,
+    val companyLink: String
+)
+suspend fun getJob():List<Job> {
+    val client = HttpClient(Js) {
+        install(ContentNegotiation) { json(Json) }
+    }
+    val response: HttpResponse = client.get("https://app.shubhasaimohapatra.in/workexps")
+    val responseBody: String = response.bodyAsText()
+    println("Raw JSON response: $responseBody")
+    val body = response.body<List<Job>>()
+    println("Body"+body[0].companyName)
+    client.close()
+    return body
+}
+@Composable
+fun Works() {
+    ContainerInSection(WtSections.wtSectionBgGrayDark) {
+        val data: MutableState<List<Job>> = remember { mutableStateOf(emptyList()) }
+        LaunchedEffect(key1 = Unit) {
+              // Assuming getSkill() is a suspend function that returns a List<Skill>
+            try {
+                data.value = getJob()
+            }catch (e:Exception){
+                println(e.message.toString())
             }
-        ) {
-            getexpCards().forEach {
-                CardDark(
-                    title = it.title,
-                    links = it.links,
-                    wtExtraStyleClasses = listOf(WtCols.wtCol4, WtCols.wtColMd6, WtCols.wtColSm12)
-                ) {
-                    ExpCardContent(it.content,it.tags)
+        }
+        Div(attrs = {
+            id("work_section")
+            classes(WtContainer.wtContainer, WtOffsets.wtTopOffset96)
+            style {
+                display(DisplayStyle.Flex)
+                alignItems(AlignItems.Center)
+                justifyContent(JustifyContent.Center)  // Center content horizontally
+            }
+        }) {
+            H1(attrs = { classes(WtTexts.wtHero2) }) {
+                Text("Experience")
+            }
+        }
+        Div(attrs = {
+            //classes(WtContainer.wtContainer, WtOffsets.wtTopOffset96)
+            style {
+                display(DisplayStyle.Flex)
+                flexDirection(FlexDirection.Row) // Arrange items vertically
+                alignItems(AlignItems.Center)
+                justifyContent(JustifyContent.Center)
+                width(100.percent)  // Adjust width as needed (e.g., 50% of the screen)
+                marginTop(10.px)  // Center content horizontally
+            }
+        }) {
+            Div(
+                attrs = {
+                    classes(WtRows.wtRow, WtRows.wtRowSizeM, WtOffsets.wtTopOffset24)
+                }
+            ) {
+                data.value.forEach {
+                    val links:ArrayList<LinkOnCard> = ArrayList()
+                    links.add(LinkOnCard(it.companyName,it.companyLink))
+                    CardDark(
+                        title = it.jobTitle,
+                        links = links,
+                        wtExtraStyleClasses = listOf(WtCols.wtCol4, WtCols.wtColMd6, WtCols.wtColSm12)
+                    ) {
+                        WorkExpCardContent(it)
+                    }
                 }
             }
         }
+
+    }
+}
+@Serializable
+data class Project(
+    val _id: String,
+    val projectTitle: String,
+    val projectDescription: String,
+    val thumbnailUrl: String,
+    val projectTag: String,
+    val skills: List<String>,
+    val projectLink: String,
+    val videoLink: String,
+    val screenshotsLink: List<String>
+)
+suspend fun getProject():List<Project> {
+    val client = HttpClient(Js) {
+        install(ContentNegotiation) { json(Json) }
+    }
+    val response: HttpResponse = client.get("https://app.shubhasaimohapatra.in/projects")
+    val responseBody: String = response.bodyAsText()
+    println("Raw JSON response: $responseBody")
+    val body = response.body<List<Project>>()
+    println("Body"+body[0].projectTitle)
+    client.close()
+    return body
+}
+@Composable
+fun Projects() {
+    val data: MutableState<List<Project>> = remember { mutableStateOf(emptyList()) }
+    LaunchedEffect(key1 = Unit) {
+        // Assuming getSkill() is a suspend function that returns a List<Skill>
+        try {
+            data.value = getProject()
+        }catch (e:Exception){
+            println(e.message.toString())
+        }
+    }
+    ContainerInSection(WtSections.wtSectionBgGrayDark) {
+        Div(attrs = {
+            id("project_section")
+            classes(WtContainer.wtContainer, WtOffsets.wtTopOffset96)
+            style {
+                display(DisplayStyle.Flex)
+                alignItems(AlignItems.Center)
+                justifyContent(JustifyContent.Center)  // Center content horizontally
+            }
+        }) {
+            H1(attrs = { classes(WtTexts.wtHero2) }) {
+                Text("Projects ")
+            }
+        }
+        Div(attrs = {
+            //classes(WtContainer.wtContainer, WtOffsets.wtTopOffset96)
+            style {
+                display(DisplayStyle.Flex)
+                flexDirection(FlexDirection.Row) // Arrange items vertically
+                alignItems(AlignItems.Center)
+                justifyContent(JustifyContent.Center)
+                width(100.percent)  // Adjust width as needed (e.g., 50% of the screen)
+                marginTop(10.px)  // Center content horizontally
+            }
+        }) {
+            Div(
+                attrs = {
+                    classes(WtRows.wtRow, WtRows.wtRowSizeM, WtOffsets.wtTopOffset24)
+                }
+            ) {
+                data.value.forEach {
+                    val links:ArrayList<LinkOnCard> = ArrayList()
+                    links.add(LinkOnCard(it.projectTitle,it.projectLink))
+                    CardDark(
+                        title = it.projectTitle,
+                        links = links,
+                        wtExtraStyleClasses = listOf(WtCols.wtCol4, WtCols.wtColMd6, WtCols.wtColSm12)
+                    ) {
+                        ProjectExpCardContent(it)
+                    }
+                }
+            }
+        }
+
     }
 }

@@ -88,7 +88,7 @@ private fun SocialIconLink(link: SocialLink) {
     }
 }
 
-private data class SocialLink(
+data class SocialLink(
     val id: String,
     val url: String,
     val title: String,

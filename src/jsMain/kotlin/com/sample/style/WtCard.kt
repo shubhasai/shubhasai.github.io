@@ -1,6 +1,7 @@
 package com.portfolio.style
 
 import org.jetbrains.compose.web.css.*
+import org.jetbrains.compose.web.dom.Col
 
 object WtCards : StyleSheet(AppStylesheet) {
     val wtCard by style {
@@ -18,8 +19,8 @@ object WtCards : StyleSheet(AppStylesheet) {
     }
 
     val wtCardThemeDark by style {
-        backgroundColor(rgba(255, 255, 255, 0.05))
-        color(rgba(255, 255, 255, 0.6))
+        backgroundColor(Color.burlywood)
+        color(Color.gray)
         border(0.px)
     }
 

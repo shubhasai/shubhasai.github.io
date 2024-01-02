@@ -14,6 +14,7 @@ fun JoinUs() {
     ContainerInSection(WtSections.wtSectionBgGrayLight) {
         Div(attrs = {
             classes(WtRows.wtRow, WtRows.wtRowSizeM)
+            id("social_section")
         }) {
             Div(attrs = {
                 classes(WtCols.wtCol9, WtCols.wtColMd11, WtCols.wtColSm12)

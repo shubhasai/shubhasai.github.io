@@ -3,6 +3,7 @@ import org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsRootExtension
 plugins {
     kotlin("multiplatform")
     id("org.jetbrains.compose")
+    kotlin("plugin.serialization").version("1.8.20")
 }
 
 repositories {
@@ -16,13 +17,17 @@ kotlin {
         browser()
         binaries.executable()
     }
-
+    val ktor_version: String by project
     sourceSets {
         val jsMain by getting {
             dependencies {
                 implementation(npm("highlight.js", "10.7.2"))
                 implementation(compose.html.core)
                 implementation(compose.runtime)
+                implementation("io.ktor:ktor-client-core:$ktor_version")
+                implementation("io.ktor:ktor-client-js:$ktor_version")
+                implementation("io.ktor:ktor-client-content-negotiation:$ktor_version")
+                implementation("io.ktor:ktor-serialization-kotlinx-json:$ktor_version")
             }
         }
     }

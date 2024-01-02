@@ -46,6 +46,9 @@ object WtCols : StyleSheet(AppStylesheet) {
     val wtCol6 by style {
         AppCSSVariables.wtColCount(6)
     }
+    val wtCol8 by style {
+        AppCSSVariables.wtColCount(8)
+    }
 
     val wtCol9 by style {
         AppCSSVariables.wtColCount(9)
@@ -66,7 +69,11 @@ object WtCols : StyleSheet(AppStylesheet) {
             AppCSSVariables.wtColCount(4)
         }
     }
-
+    val wtColMd5 by style {
+        forMaxWidth(1000.px) {
+            AppCSSVariables.wtColCount(5)
+        }
+    }
     val wtColMd8 by style {
         forMaxWidth(1000.px) {
             AppCSSVariables.wtColCount(8)
