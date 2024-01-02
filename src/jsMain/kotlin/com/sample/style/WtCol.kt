@@ -30,6 +30,9 @@ object WtCols : StyleSheet(AppStylesheet) {
     val wtCol2 by style {
         AppCSSVariables.wtColCount(2)
     }
+    val wtCol1 by style {
+        AppCSSVariables.wtColCount(1)
+    }
 
     val wtCol3 by style {
         AppCSSVariables.wtColCount(3)

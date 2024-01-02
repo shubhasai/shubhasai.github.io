@@ -1,12 +1,17 @@
 package com.portfolio.content
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import org.jetbrains.compose.web.attributes.ATarget
 import org.jetbrains.compose.web.attributes.target
 import org.jetbrains.compose.web.css.*
 import org.jetbrains.compose.web.dom.*
 import com.portfolio.style.*
 import kotlinx.browser.window
+import org.w3c.dom.Window
+import org.w3c.dom.events.Event
 
 @Composable
 fun Header() {
@@ -40,17 +45,85 @@ fun Header() {
             }
 
             Div(attrs = {
-                classes(WtCols.wtCol2, WtCols.wtCol2)
+                classes(WtCols.wtCol1, WtCols.wtCol1)
                 style {
                     display(DisplayStyle.Flex)
                     alignItems(AlignItems.Center)
                 }
             }) {
-                Menu() // Menu on the right
+                ResponsiveNavBar() // Menu on the right
             }
         }
     }
 }
+@Composable
+fun LargeScreenMenu() {
+    Div({ classes(WtContainer.wtContainer) }) {
+        // Your menu items
+        getSocialLinks().forEach { HomeIconLink(it) }
+    }
+}
+@Composable
+fun SmallScreenMenu(isMenuExpanded: Boolean, onToggleMenu: () -> Unit) {
+    Div {
+        // Hamburger icon
+        Div({
+            onClick { onToggleMenu() }
+            style {
+                // Styles for the hamburger icon
+                display(DisplayStyle.Flex)
+                justifyContent(JustifyContent.Center)
+                alignItems(AlignItems.Center)
+                // Add more styles if needed
+            }
+        }) {
+            H3(attrs = {
+                style {
+                    color(Color.beige)
+                }
+            }) {
+                Text("☰")  // Placeholder for the hamburger icon
+            }
+        }
+
+        // Menu items (visible when isMenuExpanded is true)
+        if (isMenuExpanded) {
+            Div({
+                style {
+                    display(DisplayStyle.Flex)
+                    flexDirection(FlexDirection.Column)
+                    alignItems(AlignItems.Center)
+                    justifyContent(JustifyContent.Center)
+                    // Additional styles for spacing, background, etc.
+                }
+            }) {
+                getSocialLinks().forEach { HomeIconLink(it) }
+            }
+        }
+    }
+}
+
+
+@Composable
+fun ResponsiveNavBar() {
+    val windowWidth = remember { mutableStateOf(window.innerWidth) }
+    val isMenuExpanded = remember { mutableStateOf(false) }
+
+    DisposableEffect(Unit) {
+        val onResize: (Event) -> Unit = { windowWidth.value = window.innerWidth }
+        window.addEventListener("resize", onResize)
+        onDispose { window.removeEventListener("resize", onResize) }
+    }
+
+    if (windowWidth.value > 1000) {
+        // Large screen layout
+        LargeScreenMenu()
+    } else {
+        // Small screen layout
+        SmallScreenMenu(isMenuExpanded.value) { isMenuExpanded.value = !isMenuExpanded.value }
+    }
+}
+
 
 @Composable
 private fun Logo() {
@@ -71,6 +144,7 @@ private fun Logo() {
         }
     }
 }
+
 @Composable
 private fun Menu(){
     Div({ classes(WtContainer.wtContainer) }) {
@@ -78,13 +152,13 @@ private fun Menu(){
             style {
                 justifyContent(JustifyContent.Right)
                 display(DisplayStyle.Flex)
-                flexWrap(FlexWrap.Nowrap)
+                flexWrap(FlexWrap.Wrap)
             }
         }) {
             Div({classes(WtCols.wtColInline)
                     style {
                 display(DisplayStyle.Flex)
-                flexWrap(FlexWrap.Nowrap)}
+                flexWrap(FlexWrap.Wrap)}
             }) {
                 getSocialLinks().forEach { HomeIconLink(it) }
             }
@@ -99,6 +173,7 @@ private fun HomeIconLink(link: NavigationLink) {
         Img(src = link.iconSvg) {}
     }
 }
+
 data class NavigationLink(
     val iconSvg: String,
     val url:String

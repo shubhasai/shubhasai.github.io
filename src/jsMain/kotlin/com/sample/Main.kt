@@ -11,7 +11,7 @@ import org.jetbrains.compose.web.dom.Div
 fun main() {
     renderComposable(rootElementId = "root") {
         Style(AppStylesheet)
-        val videoUrl = "https://github.com/shubhasai/videolink/raw/master/pexels_videos_2611250%20(2160p).mp4"
+        val videoUrl = "bggif.gif"
 
         BackgroundVideo(videoUrl)
 
